@@ -2,18 +2,27 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\Boardgame;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 
 class BoardgameController extends AbstractController
 {
-    #[Route('/boardgame', name: 'app_boardgame')]
-    public function index(): JsonResponse
+    private $entityManager;
+
+    #[Route('/boardgames', name: 'boardgames')]
+
+    public function show(EntityManagerInterface $entityManager): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/BoardgameController.php',
+        $boardgames = $entityManager->getRepository(Boardgame::class)->findAll();
+
+        return $this->render('boardgames/show.html.twig', [
+            'boardgames' => $boardgames
         ]);
     }
-}
+
+        
+    }
+
