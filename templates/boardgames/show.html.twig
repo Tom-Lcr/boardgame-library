@@ -17,6 +17,7 @@
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Release year</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Picture</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Edit</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
@@ -26,6 +27,7 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.ratingBoardgameGeek }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.releaseYear }}</td>
                     <td class="px-6 py-4 whitespace-nowrap"><img src="{{ asset(boardgame.imagePath) }}" alt="{{ boardgame.title }}" class="w-16 h-16"></td>
+                    <td class="px-6 py-4 whitespace-nowrap"><a href="{{ path('app_boardgame_edit', {'id': boardgame.id}) }}">Edit</a></td>
                 </tr>
             {% endfor %}
         </tbody>

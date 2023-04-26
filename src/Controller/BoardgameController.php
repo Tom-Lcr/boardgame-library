@@ -49,6 +49,23 @@ class BoardgameController extends AbstractController
         ]);
     }
 
+    #[Route('/boardgames/{id}', name: 'app_boardgame_edit', methods: ['GET', 'POST'])]
+    public function edit(Boardgame $boardgame, Request $request): Response
+    {
+        $form = $this->createForm(BoardgameType::class, $boardgame);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('app_boardgame');
+        }
+
+        return $this->render('boardgames/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
         
     }
 

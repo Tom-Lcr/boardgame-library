@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Boardgame{% endblock %}
+
+{% block body %}
+    <div class="max-w-md mx-auto">
+        <h1 class="text-2xl font-bold mb-4">Edit Boardgame</h1>
+
+        {{ form_start(form, {'attr': {'class': 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'}}) }}
+            <div class="mb-4">
+                {{ form_label(form.title, 'Title', {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                {{ form_widget(form.title, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(form.description, 'Description', {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(form.ratingBoardgameGeek, 'Rating boardgame geek', {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                {{ form_widget(form.ratingBoardgameGeek, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(form.releaseYear, 'Release year', {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                {{ form_widget(form.releaseYear, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(form.imagePath, 'Image path', {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                {{ form_widget(form.imagePath, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(form.gameType, 'Game type', {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                {{ form_widget(form.gameType, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update Boardgame</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
+
+
+
