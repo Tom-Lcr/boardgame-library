@@ -66,6 +66,17 @@ class BoardgameController extends AbstractController
         ]);
     }
 
+    #[Route('/boardgames/{id}/delete', name: 'app_boardgame_delete')]
+    public function delete(Request $request, Boardgame $boardgame): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$boardgame->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($boardgame);
+            $this->entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_boardgame');
+    }
+
         
     }
 
