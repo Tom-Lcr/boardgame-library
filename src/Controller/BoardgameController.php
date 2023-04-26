@@ -49,7 +49,7 @@ class BoardgameController extends AbstractController
         ]);
     }
 
-    #[Route('/boardgames/{id}', name: 'app_boardgame_edit', methods: ['GET', 'POST'])]
+    #[Route('/boardgames/edit/{id}', name: 'app_boardgame_edit', methods: ['GET', 'POST'])]
     public function edit(Boardgame $boardgame, Request $request): Response
     {
         $form = $this->createForm(BoardgameType::class, $boardgame);
@@ -66,7 +66,7 @@ class BoardgameController extends AbstractController
         ]);
     }
 
-    #[Route('/boardgames/{id}/delete', name: 'app_boardgame_delete')]
+    #[Route('/boardgames/delete/{id}', name: 'app_boardgame_delete', methods: ['POST', 'DELETE'])]
     public function delete(Request $request, Boardgame $boardgame): Response
     {
         if ($this->isCsrfTokenValid('delete'.$boardgame->getId(), $request->request->get('_token'))) {
@@ -76,7 +76,6 @@ class BoardgameController extends AbstractController
 
         return $this->redirectToRoute('app_boardgame');
     }
-
         
     }
 
