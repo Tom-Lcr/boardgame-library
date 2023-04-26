@@ -24,6 +24,8 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{boardgame.title}}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.ratingBoardgameGeek }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.releaseYear }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap"><img src="{{ asset(boardgame.imagePath) }}" alt="{{ boardgame.title }}" class="w-18 h-18"></td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.description }}</td>
                 </tr>
             {% endfor %}
         </tbody>
