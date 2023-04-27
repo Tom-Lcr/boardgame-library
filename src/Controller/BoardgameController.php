@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Item;
+use App\Form\ItemType;
 use App\Entity\Boardgame;
 use App\Form\BoardgameType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -75,6 +77,27 @@ class BoardgameController extends AbstractController
         }
 
         return $this->redirectToRoute('app_boardgame');
+    }
+
+    #[Route('/boardgames/items/new/{id}', name: 'app_boardgame_item_new')]
+    public function newItem(Boardgame $boardgame, Request $request): Response
+    {
+        $item = new Item();
+        $item->setBoardgame($boardgame);
+        $form = $this->createForm(ItemType::class, $item);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($item);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('app_boardgame');
+        }
+
+        return $this->render('boardgames/item_new.html.twig', [
+            'form' => $form->createView(),
+            'boardgame' => $boardgame
+        ]);
     }
         
     }
