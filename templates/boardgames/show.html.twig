@@ -10,6 +10,9 @@
    <div class="flex justify-between my-4">
     <a href="{{ path('app_boardgame_new') }}" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 focus:bg-indigo-700">Add a new boardgame</a>
 </div>
+    {{ form_start(form) }}
+    {{ form_row(form.orderBy, {'attr': {'class': 'form-control'}}) }}
+    {{ form_end(form) }}
     <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
             <tr>

@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BoardgameController extends AbstractController
@@ -23,14 +24,51 @@ class BoardgameController extends AbstractController
 
     #[Route('/boardgames', name: 'app_boardgame')]
 
-    public function show(EntityManagerInterface $entityManager): Response
-    {
-        $boardgames = $entityManager->getRepository(Boardgame::class)->findAll();
+    public function show(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $orderBy = $request->query->get('orderBy', 'title'); // default to sorting by title
 
-        return $this->render('boardgames/show.html.twig', [
-            'boardgames' => $boardgames
-        ]);
+    $form = $this->createFormBuilder()
+        ->add('orderBy', ChoiceType::class, [
+            'choices' => [
+                'Title' => 'title',
+                'Rating' => 'rating',
+                'Year' => 'year',
+            ],
+            'data' => $orderBy,
+            'attr' => ['onchange' => 'this.form.submit()'],
+        ])
+        ->setMethod('GET')
+        ->getForm();
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $orderBy = $form->getData()['orderBy'];
     }
+
+    switch ($orderBy) {
+        case 'rating':
+            $orderByParam = ['ratingBoardgameGeek' => 'DESC'];
+            break;
+        case 'year':
+            $orderByParam = ['releaseYear' => 'DESC'];
+            break;
+        case 'title':
+        default:
+            $orderByParam = ['title' => 'ASC'];
+            break;
+    }
+
+    $boardgames = $entityManager->getRepository(Boardgame::class)->findBy([], $orderByParam);
+
+    return $this->render('boardgames/show.html.twig', [
+        'boardgames' => $boardgames,
+        'form' => $form->createView(),
+    ]);
+}
+
+  
 
     #[Route('/boardgames/new', name: 'app_boardgame_new')]
     public function new(Request $request): Response
