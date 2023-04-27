@@ -26,7 +26,7 @@ class BoardgameController extends AbstractController
 
     public function show(Request $request, EntityManagerInterface $entityManager): Response
 {
-    $orderBy = $request->query->get('orderBy', 'title'); // default to sorting by title
+    $orderBy = $request->query->get('orderBy', 'title'); 
 
     $form = $this->createFormBuilder()
         ->add('orderBy', ChoiceType::class, [
