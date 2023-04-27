@@ -95,8 +95,8 @@ class BoardgameController extends AbstractController
         }
 
         return $this->render('boardgames/item_new.html.twig', [
-            'form' => $form->createView(),
-            'boardgame' => $boardgame
+            'boardgame' => $boardgame,
+            'form' => $form->createView(), 
         ]);
     }
         
