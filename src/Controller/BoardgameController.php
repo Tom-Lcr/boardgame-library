@@ -62,6 +62,20 @@ class BoardgameController extends AbstractController
 
     $boardgames = $entityManager->getRepository(Boardgame::class)->findBy([], $orderByParam);
 
+    // Get the search query from the request
+    $searchQuery = $request->query->get('q');
+
+    // Query the database to get the boardgames that match the search query
+    $query = $entityManager->getRepository(Boardgame::class)
+    ->createQueryBuilder('b')
+    ->where('b.title LIKE :query')
+    ->setParameter('query', '%'.$searchQuery.'%')
+    //->orderBy($orderBy, 'ASC')
+    ->getQuery();
+    $boardgames = $query->getResult();
+
+
+
     return $this->render('boardgames/show.html.twig', [
         'boardgames' => $boardgames,
         'form' => $form->createView(),
