@@ -23,65 +23,73 @@ class BoardgameController extends AbstractController
     }
 
     #[Route('/boardgames', name: 'app_boardgame')]
-
-    public function show(Request $request, EntityManagerInterface $entityManager): Response
+public function show(Request $request, EntityManagerInterface $entityManager): Response
 {
-    $orderBy = $request->query->get('orderBy', 'title'); 
+$orderBy = $request->query->get('orderBy', 'title');
+$searchQuery = $request->query->get('q');
 
-    $form = $this->createFormBuilder()
-        ->add('orderBy', ChoiceType::class, [
-            'choices' => [
-                'Title' => 'title',
-                'Rating' => 'rating',
-                'Year' => 'year',
-            ],
-            'data' => $orderBy,
-            'attr' => ['onchange' => 'this.form.submit()'],
-        ])
-        ->setMethod('GET')
-        ->getForm();
+$form = $this->createFormBuilder()
+    ->add('orderBy', ChoiceType::class, [
+        'choices' => [
+            'Title' => 'title',
+            'Rating' => 'rating',
+            'Year' => 'year',
+        ],
+        'data' => $orderBy,
+        'attr' => ['onchange' => 'this.form.submit()'],
+    ])
+    ->setMethod('GET')
+    ->getForm();
 
     $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        $orderBy = $form->getData()['orderBy'];
-    }
-
-    switch ($orderBy) {
-        case 'rating':
-            $orderByParam = ['ratingBoardgameGeek' => 'DESC'];
-            break;
-        case 'year':
-            $orderByParam = ['releaseYear' => 'DESC'];
-            break;
-        case 'title':
-        default:
-            $orderByParam = ['title' => 'ASC'];
-            break;
-    }
-
-    $boardgames = $entityManager->getRepository(Boardgame::class)->findBy([], $orderByParam);
-
-    // Get the search query from the request
-    $searchQuery = $request->query->get('q');
-
-    // Query the database to get the boardgames that match the search query
-    $query = $entityManager->getRepository(Boardgame::class)
-    ->createQueryBuilder('b')
-    ->where('b.title LIKE :query')
-    ->setParameter('query', '%'.$searchQuery.'%')
-    //->orderBy($orderBy, 'ASC')
-    ->getQuery();
-    $boardgames = $query->getResult();
-
-
-
-    return $this->render('boardgames/show.html.twig', [
-        'boardgames' => $boardgames,
-        'form' => $form->createView(),
-    ]);
+if ($form->isSubmitted() && $form->isValid()) {
+    $orderBy = $form->getData()['orderBy'];
 }
 
+switch ($orderBy) {
+    case 'rating':
+        $orderByParam = ['ratingBoardgameGeek' => 'DESC'];
+        break;
+    case 'year':
+        $orderByParam = ['releaseYear' => 'DESC'];
+        break;
+    case 'title':
+    default:
+        $orderByParam = ['title' => 'ASC'];
+        break;
+}
+
+$boardgamesQueryBuilder = $entityManager->getRepository(Boardgame::class)->createQueryBuilder('b');
+
+if ($searchQuery) {
+    $boardgamesQueryBuilder->where('b.title LIKE :query')
+        ->setParameter('query', '%'.$searchQuery.'%');
+}
+
+if ($orderBy == 'rating') {
+    $orderByColumn = 'b.ratingBoardgameGeek';
+    $orderByDirection = 'DESC';
+} else if ($orderBy == 'year') {
+    $orderByColumn = 'b.releaseYear';
+    $orderByDirection = 'DESC';
+} else {
+    $orderByColumn = 'b.title';
+    $orderByDirection = 'ASC';
+}
+
+$boardgamesQueryBuilder->orderBy($orderByColumn, $orderByDirection);
+
+$boardgamesQuery = $boardgamesQueryBuilder->getQuery();
+$boardgames = $boardgamesQuery->getResult();
+
+return $this->render('boardgames/show.html.twig', [
+    'boardgames' => $boardgames,
+    'form' => $form->createView(),
+]);
+}
+
+   
   
 
     #[Route('/boardgames/new', name: 'app_boardgame_new')]
