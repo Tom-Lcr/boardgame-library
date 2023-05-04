@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 27 apr 2023 om 15:41
+-- Gegenereerd op: 04 mei 2023 om 16:03
 -- Serverversie: 10.4.27-MariaDB
 -- PHP-versie: 8.1.12
 
@@ -125,7 +125,10 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `password`, `email`, `roles`) VALUES
 (1, '$2y$13$8Q2XnFWC88CcDOkL8p6TxOJnD9soAKSIPYMg05jn2a50jG2qcKgBa', 'tom@mail.com', '[]'),
-(2, '$2y$13$1Kb9zCN3kjCgBihCGoigQeXt8ByVXWqOSK/mywU02FRYzXsC4jknO', 'bram@mail.com', '[]');
+(2, '$2y$13$1Kb9zCN3kjCgBihCGoigQeXt8ByVXWqOSK/mywU02FRYzXsC4jknO', 'bram@mail.com', '[]'),
+(3, '$2y$13$Y3KrafXZbPMKVPhdgKh61Owe8ZMHHpbYjYX5ycxdHARjJUXu8jxkO', 'chris@mail.com', '[]'),
+(4, '$2y$13$tqFm1Ag/9JpUBoXiQ2qgfuRjoDeCCEuEIUcxFrs0SQv946biOiAlm', 'marianne@mail.com', '[]'),
+(5, '$2y$13$EH2wfy06IMPIe.7tBfNN2.njVolGqlgo0byi6X/UIHf1.Z3GskX3a', 'sina@mail.com', '[]');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -177,7 +180,7 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT voor een tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
