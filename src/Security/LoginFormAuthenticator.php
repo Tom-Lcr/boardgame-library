@@ -34,10 +34,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         $userRoles = ['ROLE_USER'];
 
-    // check if the user is Tom and set their roles to ROLE_ADMIN
-    if ($email === 'tom@mail.com') {
-        $userRoles[] = 'ROLE_ADMIN';
-    }
+        // check if the user is Tom and set their roles to ROLE_ADMIN
+        if ($email === 'tom@mail.com') {
+            $userRoles[] = 'ROLE_ADMIN';
+        }
 
         return new Passport(
             new UserBadge($email),
@@ -50,19 +50,14 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
-{
-    if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-        return new RedirectResponse($targetPath);
-    }
+    {
+        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+            return new RedirectResponse($targetPath);
+        }
 
-    $user = $token->getUser();
-
-    if ($user instanceof User && in_array('ROLE_ADMIN', $user->getRoles())) {
+        // Redirect all users to app_boardgame after login
         return new RedirectResponse($this->urlGenerator->generate('app_boardgame'));
     }
-
-    return new RedirectResponse($this->urlGenerator->generate('app_boardgame_user'));
-}
 
     protected function getLoginUrl(Request $request): string
     {

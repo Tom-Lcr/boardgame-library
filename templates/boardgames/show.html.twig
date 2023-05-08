@@ -1,14 +1,13 @@
 {% extends "base.html.twig" %}
 
-
-
-
 {% block body %}
 
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <h1 class="text-3xl font-bold leading-tight text-gray-900">Boardgame Library</h1>
     <div class="flex justify-between my-4">
-        <a href="{{ path('app_boardgame_new') }}" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 focus:bg-indigo-700">Add a new boardgame</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_boardgame_new') }}" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 focus:bg-indigo-700">Add a new boardgame</a>
+        {% endif %}
         <form action="{{ path('app_boardgame') }}" method="GET">
             <div class="flex items-center">
                 <input type="text" name="q" class="form-control mr-2 h-8 px-2 border rounded" placeholder="Search boardgames">
@@ -43,6 +42,7 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.ratingBoardgameGeek }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.releaseYear }}</td>
                     <td class="px-6 py-4 whitespace-nowrap"><img src="{{ asset(boardgame.imagePath) }}" alt="{{ boardgame.title }}" class="w-16 h-16"></td>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <td class="px-6 py-4 whitespace-nowrap"><a href="{{ path('app_boardgame_edit', {'id': boardgame.id}) }}">Edit</a></td>
                     <td>
                       <form action="{{ path('app_boardgame_delete', {'id': boardgame.id}) }}" method="POST" 
@@ -52,6 +52,7 @@
                          <button type="submit" class="text-red-500 font-bold">Delete</button>
                        </form>
                     </td>
+                    {% endif %}
             {% endfor %}
         </tbody>
     </table>
