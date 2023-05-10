@@ -89,8 +89,16 @@ return $this->render('boardgames/show.html.twig', [
 ]);
 }
 
+#[Route('/boardgames/{id}', name: 'app_boardgame_single')]
+     
+    public function showSingle(Boardgame $boardgame): Response
+    {
+        return $this->render('boardgame/show.html.twig', [
+            'boardgame' => $boardgame,
+        ]);
+    }
+
    
-  
 
     #[Route('/boardgames/new', name: 'app_boardgame_new')]
     public function new(Request $request): Response

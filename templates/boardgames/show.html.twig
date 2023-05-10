@@ -38,7 +38,7 @@
         <tbody class="bg-white divide-y divide-gray-200">
             {% for boardgame in boardgames %}
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">{{boardgame.title}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap"><a href="{{ path('app_boardgame_single', {'id': boardgame.id}) }}">{{ boardgame.title }}</a></td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.ratingBoardgameGeek }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.releaseYear }}</td>
                     <td class="px-6 py-4 whitespace-nowrap"><img src="{{ asset(boardgame.imagePath) }}" alt="{{ boardgame.title }}" class="w-16 h-16"></td>
