@@ -93,7 +93,7 @@ return $this->render('boardgames/show.html.twig', [
      
     public function showSingle(Boardgame $boardgame): Response
     {
-        return $this->render('boardgame/show.html.twig', [
+        return $this->render('boardgames/single.html.twig', [
             'boardgame' => $boardgame,
         ]);
     }
