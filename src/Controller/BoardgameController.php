@@ -147,26 +147,7 @@ return $this->render('boardgames/show.html.twig', [
         return $this->redirectToRoute('app_boardgame');
     }
 
-    #[Route('/boardgames/items/new/{id}', name: 'app_boardgame_item_new')]
-    public function newItem(Boardgame $boardgame, Request $request): Response
-    {
-        $item = new Item();
-        $item->setBoardgame($boardgame);
-        $form = $this->createForm(ItemType::class, $item);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($item);
-            $this->entityManager->flush();
-
-            return $this->redirectToRoute('app_boardgame');
-        }
-
-        return $this->render('boardgames/item_new.html.twig', [
-            'boardgame' => $boardgame,
-            'form' => $form->createView(), 
-        ]);
-    }
+    
         
     }
 
