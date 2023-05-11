@@ -23,51 +23,42 @@ class BoardgameController extends AbstractController
     }
 
     #[Route('/boardgames', name: 'app_boardgame')]
-public function show(Request $request, EntityManagerInterface $entityManager): Response
+    //Generate boardgame list
+public function show(Request $request, EntityManagerInterface $entityManager): Response 
 {
-$orderBy = $request->query->get('orderBy', 'title');
-$searchQuery = $request->query->get('q');
+$orderBy = $request->query->get('orderBy', 'title'); //default order is by title
+$searchQuery = $request->query->get('q');// get search input
 
 $form = $this->createFormBuilder()
     ->add('orderBy', ChoiceType::class, [
         'choices' => [
-            'Title' => 'title',
+            'Title' => 'title',   // Possibilities to order by: title, rating, year
             'Rating' => 'rating',
             'Year' => 'year',
         ],
         'data' => $orderBy,
-        'attr' => ['onchange' => 'this.form.submit()'],
+        'attr' => ['onchange' => 'this.form.submit()'], // on selection of new criteria form gets submitted
     ])
     ->setMethod('GET')
     ->getForm();
 
     $form->handleRequest($request);
-
-if ($form->isSubmitted() && $form->isValid()) {
+// if form is submitted order data gets saved in variable $orderBy
+if ($form->isSubmitted() && $form->isValid()) { 
     $orderBy = $form->getData()['orderBy'];
 }
 
-switch ($orderBy) {
-    case 'rating':
-        $orderByParam = ['ratingBoardgameGeek' => 'DESC'];
-        break;
-    case 'year':
-        $orderByParam = ['releaseYear' => 'DESC'];
-        break;
-    case 'title':
-    default:
-        $orderByParam = ['title' => 'ASC'];
-        break;
-}
-
+//New querybuilder
 $boardgamesQueryBuilder = $entityManager->getRepository(Boardgame::class)->createQueryBuilder('b');
-
+// if a search term is true
 if ($searchQuery) {
-    $boardgamesQueryBuilder->where('b.title LIKE :query')
-        ->setParameter('query', '%'.$searchQuery.'%');
+    $boardgamesQueryBuilder->where('b.title LIKE :query') 
+        ->setParameter('query', '%'.$searchQuery.'%'); //titles in database will get looked up based on searchquery
 }
 
-if ($orderBy == 'rating') {
+
+// based on the value of $orderby two variables get declared based on what the data needs to get ordered by
+if ($orderBy == 'rating') { 
     $orderByColumn = 'b.ratingBoardgameGeek';
     $orderByDirection = 'DESC';
 } else if ($orderBy == 'year') {
@@ -78,12 +69,13 @@ if ($orderBy == 'rating') {
     $orderByDirection = 'ASC';
 }
 
-$boardgamesQueryBuilder->orderBy($orderByColumn, $orderByDirection);
+$boardgamesQueryBuilder->orderBy($orderByColumn, $orderByDirection); //boardgames get orderded
 
-$boardgamesQuery = $boardgamesQueryBuilder->getQuery();
-$boardgames = $boardgamesQuery->getResult();
+$boardgamesQuery = $boardgamesQueryBuilder->getQuery(); //retrieve list of boardgames based on search
+$boardgames = $boardgamesQuery->getResult(); //save them in variable $boardgames
 
-return $this->render('boardgames/show.html.twig', [
+//display boardgames list with search and order form
+return $this->render('boardgames/show.html.twig', [ 
     'boardgames' => $boardgames,
     'form' => $form->createView(),
 ]);
