@@ -1,0 +1,1 @@
+# Boardgame bibiliotheek. W.I.P. Create, Read, Update, Delete boardgames als admin (tom@mail.com). Filter en zoek boardgames als user. Bekijk individuele boardgames. Meer functies worden nog toegevoegd.
