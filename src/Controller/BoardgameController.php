@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -138,6 +139,20 @@ return $this->render('boardgames/show.html.twig', [
 
         return $this->redirectToRoute('app_boardgame');
     }
+
+    #[Route('/boardgames/add-item/{id}', name: 'app_boardgame_add_item', methods: ['POST'])]
+public function addItem(Boardgame $boardgame): RedirectResponse
+{
+    $item = new Item();
+    $item->setBoardgame($boardgame)
+        ->setPresent(true);
+
+    $boardgame->addItem($item);
+    $this->entityManager->persist($item);
+    $this->entityManager->flush();
+
+    return $this->redirectToRoute('app_boardgame');
+}
 
     
         

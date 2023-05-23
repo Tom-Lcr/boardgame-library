@@ -52,9 +52,17 @@
                          <button type="submit" class="text-red-500 font-bold">Delete</button>
                        </form>
                     </td>
+                    <td>
+                           <form action="{{ path('app_boardgame_add_item', {'id': boardgame.id}) }}" method="post">
+                              <button type="submit">Add Item</button>
+                          </form>
+                    </td>
                     {% endif %}
             {% endfor %}
         </tbody>
     </table>
 
 {% endblock %}
+
+
+
