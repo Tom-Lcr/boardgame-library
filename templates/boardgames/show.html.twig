@@ -30,6 +30,10 @@
         <thead class="bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Items</th>
+                {% endif %}
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Items available</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Release year</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Picture</th>
@@ -39,6 +43,10 @@
             {% for boardgame in boardgames %}
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap"><a href="{{ path('app_boardgame_single', {'id': boardgame.id}) }}">{{ boardgame.title }}</a></td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.items|length }}</td>
+                    {% endif %}
+                    <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.itemsAvailable }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.ratingBoardgameGeek }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ boardgame.releaseYear }}</td>
                     <td class="px-6 py-4 whitespace-nowrap"><img src="{{ asset(boardgame.imagePath) }}" alt="{{ boardgame.title }}" class="w-16 h-16"></td>

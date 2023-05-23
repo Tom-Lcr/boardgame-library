@@ -112,6 +112,19 @@ class Boardgame
         return $this;
     }
 
+    public function getItemsAvailable(): int
+    {
+        $itemsAvailable = 0;
+
+        foreach ($this->items as $item) {
+            if ($item->isPresent()) {
+                $itemsAvailable++;
+            }
+        }
+
+        return $itemsAvailable;
+    }
+
     public function getReleaseYear(): ?int
     {
         return $this->releaseYear;
