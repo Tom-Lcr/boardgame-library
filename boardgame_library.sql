@@ -2,8 +2,8 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Gegenereerd op: 04 mei 2023 om 16:03
+-- Host: 127.0.0.1:3306
+-- Gegenereerd op: 23 mei 2023 om 10:37
 -- Serverversie: 10.4.27-MariaDB
 -- PHP-versie: 8.1.12
 
@@ -104,7 +104,22 @@ INSERT INTO `item` (`id`, `boardgame_id`, `present`) VALUES
 (7, 7, 0),
 (8, 8, 1),
 (9, 5, 0),
-(10, 6, 0);
+(10, 6, 0),
+(11, 5, 1),
+(12, 12, 1),
+(13, 10, 1),
+(14, 16, 1),
+(15, 13, 1),
+(16, 6, 1),
+(17, 7, 1),
+(18, 18, 1),
+(19, 20, 1),
+(20, 21, 1),
+(21, 14, 1),
+(22, 8, 1),
+(23, 19, 1),
+(24, 9, 1),
+(25, 15, 1);
 
 -- --------------------------------------------------------
 
@@ -124,11 +139,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `password`, `email`, `roles`) VALUES
-(1, '$2y$13$8Q2XnFWC88CcDOkL8p6TxOJnD9soAKSIPYMg05jn2a50jG2qcKgBa', 'tom@mail.com', '[]'),
+(1, '$2y$13$8Q2XnFWC88CcDOkL8p6TxOJnD9soAKSIPYMg05jn2a50jG2qcKgBa', 'tom@mail.com', '[\"ROLE_ADMIN\"]'),
 (2, '$2y$13$1Kb9zCN3kjCgBihCGoigQeXt8ByVXWqOSK/mywU02FRYzXsC4jknO', 'bram@mail.com', '[]'),
 (3, '$2y$13$Y3KrafXZbPMKVPhdgKh61Owe8ZMHHpbYjYX5ycxdHARjJUXu8jxkO', 'chris@mail.com', '[]'),
 (4, '$2y$13$tqFm1Ag/9JpUBoXiQ2qgfuRjoDeCCEuEIUcxFrs0SQv946biOiAlm', 'marianne@mail.com', '[]'),
-(5, '$2y$13$EH2wfy06IMPIe.7tBfNN2.njVolGqlgo0byi6X/UIHf1.Z3GskX3a', 'sina@mail.com', '[]');
+(5, '$2y$13$EH2wfy06IMPIe.7tBfNN2.njVolGqlgo0byi6X/UIHf1.Z3GskX3a', 'sina@mail.com', '[]'),
+(6, '$2y$13$y/vZI3dtmgr7n42edJwCOuCmTBFtGJ25M.jFIOIQqgaMw/0xQ4wp6', 'guillaume@mail.com', '[]');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -174,13 +190,13 @@ ALTER TABLE `boardgame`
 -- AUTO_INCREMENT voor een tabel `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT voor een tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
