@@ -154,7 +154,8 @@ public function addItem(Boardgame $boardgame): RedirectResponse
     return $this->redirectToRoute('app_boardgame');
 }
 
-    
+
+
         
     }
 

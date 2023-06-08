@@ -62,9 +62,10 @@
                     </td>
                     <td>
                            <form action="{{ path('app_boardgame_add_item', {'id': boardgame.id}) }}" method="post">
-                              <button type="submit">Add Item</button>
-                          </form>
+                              <button type="submit">Add</button>
+                           </form>
                     </td>
+                    
                     {% endif %}
             {% endfor %}
         </tbody>
